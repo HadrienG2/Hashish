@@ -1,1 +1,1 @@
-Normally, qmake/make/make install should do when compiling this project. However, I haven't tried this yet.
+Normally, qmake/make/make install should do when compiling+installing this project, except for the desktop file which still must be manually installed currently. However, I haven't tried it yet. If you use Qt Creator to build the project, everything should work fine.
