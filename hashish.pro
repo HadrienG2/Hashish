@@ -58,3 +58,14 @@ unix {
 windows {
     RC_FILE = win_hashish.rc
 }
+
+OTHER_FILES += \
+    win_hashish.rc \
+    hashish_fr.ts \
+    hashish_fr.qm \
+    hashish_en.ts \
+    hashish_en.qm \
+    hashish.xcf \
+    hashish.ico \
+    hashish.desktop \
+    COPYING

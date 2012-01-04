@@ -1,0 +1,11 @@
+
+[Desktop Entry]
+Type=Application
+Name=Hashish
+Comment=Password generator and manager
+Comment[fr]=Générateur et gestionnaire de mots de passe
+Icon=hashish
+Exec=hashish
+Terminal=false
+Categories=Utility;Qt;
+X-Desktop-File-Install-Version=0.18
