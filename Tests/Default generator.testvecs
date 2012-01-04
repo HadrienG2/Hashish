@@ -1,0 +1,157 @@
+*** Hashish test file v1 ***
+
+hash : SHA-512
+hmac : RFC 2104
+
+key : 0x1b7409ccf0d5a34d 3a77eaabfa9fe274 27655be9297127ee 9522aa1bf4046d4f 945983678169cb1a 7348edcac47ef0d9 e2c924130e5bcc5f 0d94937852c42f1b
+constraints : {
+    case_sensitivity : false
+    number_of_caps : 0
+    number_of_digits : 0
+    maximal_length : 0
+    extra_symbols : 
+}
+cached_data : {
+    constraint_counter : 0
+}
+result : 09bmocqfwfxma2wvcmbphhwrbbpapnmqg8j65rcfqu32t6avtyuc2x48kxnotkoibayx8newvgtszdvrfo4xbetpyfbsrcg0rwd9uy3b
+
+
+key : 0x1b7409ccf0d5a34d 3a77eaabfa9fe274 27655be9297127ee 9522aa1bf4046d4f 945983678169cb1a 7348edcac47ef0d9 e2c924130e5bcc5f 0d94937852c42f1b
+constraints : {
+    case_sensitivity : false
+    number_of_caps : 0
+    number_of_digits : 0
+    maximal_length : 8
+    extra_symbols : 
+}
+cached_data : {
+    constraint_counter : 0
+}
+result : rwd9uy3b
+
+
+key : 0x1b7409ccf0d5a34d 3a77eaabfa9fe274 27655be9297127ee 9522aa1bf4046d4f 945983678169cb1a 7348edcac47ef0d9 e2c924130e5bcc5f 0d94937852c42f1b
+constraints : {
+    case_sensitivity : false
+    number_of_caps : 0
+    number_of_digits : 1
+    maximal_length : 8
+    extra_symbols : 
+}
+cached_data : {
+    constraint_counter : 0
+}
+result : 0wd9uy3b
+
+
+key : 0x1b7409ccf0d5a34d 3a77eaabfa9fe274 27655be9297127ee 9522aa1bf4046d4f 945983678169cb1a 7348edcac47ef0d9 e2c924130e5bcc5f 0d94937852c42f1b
+constraints : {
+    case_sensitivity : false
+    number_of_caps : 0
+    number_of_digits : 8
+    maximal_length : 8
+    extra_symbols : 
+}
+cached_data : {
+    constraint_counter : 0
+}
+result : 09286532
+
+
+key : 0x1b7409ccf0d5a34d 3a77eaabfa9fe274 27655be9297127ee 9522aa1bf4046d4f 945983678169cb1a 7348edcac47ef0d9 e2c924130e5bcc5f 0d94937852c42f1b
+constraints : {
+    case_sensitivity : false
+    number_of_caps : 0
+    number_of_digits : 24
+    maximal_length : 24
+    extra_symbols : 
+}
+cached_data : {
+    constraint_counter : 0
+}
+result : 693989074678753803028479
+
+
+key : 0x1b7409ccf0d5a34d 3a77eaabfa9fe274 27655be9297127ee 9522aa1bf4046d4f 945983678169cb1a 7348edcac47ef0d9 e2c924130e5bcc5f 0d94937852c42f1b
+constraints : {
+    case_sensitivity : false
+    number_of_caps : 0
+    number_of_digits : 24
+    maximal_length : 24
+    extra_symbols : 
+}
+cached_data : {
+    constraint_counter : 2
+}
+result : 693989074678753803028479
+
+
+key : 0x1b7409ccf0d5a34d 3a77eaabfa9fe274 27655be9297127ee 9522aa1bf4046d4f 945983678169cb1a 7348edcac47ef0d9 e2c924130e5bcc5f 0d94937852c42f1b
+constraints : {
+    case_sensitivity : false
+    number_of_caps : 0
+    number_of_digits : 24
+    maximal_length : 24
+    extra_symbols : 
+}
+cached_data : {
+    constraint_counter : 3
+}
+result : 859142217585487939542839
+
+
+key : 0x1b7409ccf0d5a34d 3a77eaabfa9fe274 27655be9297127ee 9522aa1bf4046d4f 945983678169cb1a 7348edcac47ef0d9 e2c924130e5bcc5f 0d94937852c42f1b
+constraints : {
+    case_sensitivity : true
+    number_of_caps : 0
+    number_of_digits : 0
+    maximal_length : 0
+    extra_symbols : 
+}
+cached_data : {
+    constraint_counter : 0
+}
+result : Av98uJrHVYbSxpcZiZE5SfNdfuKQ4SXfojOAalxlpj7oeSCBRHLNFXgMsl5BOm9kWuRcIRDbDfp7gmH8PBZS5Dsk
+
+
+key : 0x1b7409ccf0d5a34d 3a77eaabfa9fe274 27655be9297127ee 9522aa1bf4046d4f 945983678169cb1a 7348edcac47ef0d9 e2c924130e5bcc5f 0d94937852c42f1b
+constraints : {
+    case_sensitivity : true
+    number_of_caps : 1
+    number_of_digits : 0
+    maximal_length : 8
+    extra_symbols : 
+}
+cached_data : {
+    constraint_counter : 0
+}
+result : ABZS5Dsk
+
+
+key : 0x1b7409ccf0d5a34d 3a77eaabfa9fe274 27655be9297127ee 9522aa1bf4046d4f 945983678169cb1a 7348edcac47ef0d9 e2c924130e5bcc5f 0d94937852c42f1b
+constraints : {
+    case_sensitivity : true
+    number_of_caps : 8
+    number_of_digits : 0
+    maximal_length : 8
+    extra_symbols : 
+}
+cached_data : {
+    constraint_counter : 0
+}
+result : AJHVYSZZ
+
+
+key : 0x1b7409ccf0d5a34d 3a77eaabfa9fe274 27655be9297127ee 9522aa1bf4046d4f 945983678169cb1a 7348edcac47ef0d9 e2c924130e5bcc5f 0d94937852c42f1b
+constraints : {
+    case_sensitivity : false
+    number_of_caps : 0
+    number_of_digits : 0
+    maximal_length : 0
+    extra_symbols : &_@$
+}
+cached_data : {
+    constraint_counter : 0
+}
+result : @g63fj@&e2@da&e3s$odxlx4lahl@jqnt5tli2af6pfzmlvjpd3a6pnncshoyl_na6o2exewap_9bbjqde2kr_2gdna4t&w_0epgtyua
