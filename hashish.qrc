@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/">
+        <file>hashish.png</file>
+        <file>hashish_en.qm</file>
+        <file>hashish_fr.qm</file>
+        <file>Tests/Default generator.testvecs</file>
+        <file>Tests/OFB-chained XOR cipher.testvecs</file>
+        <file>Tests/RFC 2104.testvecs</file>
+        <file>Tests/SHA-512.testvecs</file>
+    </qresource>
+</RCC>
