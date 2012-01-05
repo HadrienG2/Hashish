@@ -22,7 +22,7 @@
     h2 { font-size: 1.5em; color: #408040; }
     h3 { text-align: left; color: #408040; }
     a { color: #408040; }
-    .description { font-size: 1.2em; margin-bottom: 25px; margin-top: 15px; font-style: italic;}
+    .description { font-size: 1.2em; margin-bottom: 25px; margin-top: 5px; font-style: italic;}
     .download { float: right; }
     pre { background: #000; color: #fff; padding: 15px;}
     hr { border: 0; width: 80%; border-bottom: 1px solid #aaa}
@@ -40,11 +40,10 @@
       <a href="binaries/hashish_current_win32.zip"><img border="0" width="90" src="win.png"></a>
     </div>
 
-    <h1><a href="https://github.com/Neolander/Hashish">Hashish</a>
-      <span class="small">by <a href="https://github.com/Neolander">Neolander</a></span></h1>
+    <h1><a href="https://github.com/Neolander/Hashish">Hashish</a></h1>
 
     <div class="description">
-      Password generation and management tool
+      Password generation and management tool, by Hadrien&nbsp;Grasland "Neolander" and Louis&nbsp;Gosselin
     </div>
 
     
@@ -59,6 +58,7 @@
       <h2>Installation instructions</h2>
       <p>Here are binary packages for <a href="binaries/hashish_current_win32.zip">Windows</a> and <a href="binaries/hashish_current_linux_x64.tar.gz">Linux x64</a>. Just unpack them in a place where they won't bother you, and on Linux make sure that you have the Qt libraries installed. For an optimal user experience, I also recommend that you set up an easily accessible shortcut (keystroke, quicklaunch button...) in order to quickly launch Hashish whenever you need a password.</p>
 
+
       <h2>Version history</h2>
       <h3>Hashish v2 (5 January 2012)</h3>
       <ul><li>First public release of Hashish</li>
@@ -66,30 +66,11 @@
           <li>Cryptographic functions are now checked against known-good test vectors on startup, and a warning is issued if the expected results are not computed.</li></ul>
       <h3>Hashish v1 (24 December 2011)</h3>
       <ul><li>Written for my brother's birthday, not publicly released</li></ul>
-
-<br />
-<br />
-<hr>
-<br />
-<br />
-    
-      <h2>Dependencies</h2>
-      <p>libc, QtCore, QtGui</p>
-    
-
-    
-      <h2>License</h2>
-      <p>GPLv2+</p>
-    
-
-    
-      <h2>Authors</h2>
-      <p>Hadrien Grasland (guydeloinbard@yahoo.fr), Louis Gosselin</p>
     
 
     <h2>Download source</h2>
     <p>
-      You can download the source code of this project in either
+      You can download the source code of this project (released under GPLv2+) in either
       <a href="https://github.com/Neolander/Hashish/zipball/master">zip</a> or
       <a href="https://github.com/Neolander/Hashish/tarball/master">tar formats.
     </p>
@@ -97,6 +78,7 @@
       by running:
       <pre>$ git clone git://github.com/Neolander/Hashish</pre>
     </p>
+    <p>Hashish depends on the libc and on the QtCore and QtGui libraries. The latter is sometimes called qt-x11 in Linux repositories.</p>
 
     <div class="footer">
       Developer documentation and bug reporting tools on GitHub : <a href="https://github.com/Neolander/Hashish">Neolander/Hashish</a>
