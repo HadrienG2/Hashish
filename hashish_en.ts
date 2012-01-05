@@ -25,47 +25,58 @@
     </message>
     <message>
         <location filename="about_window.cpp" line="40"/>
-        <source>(C) 2011 Hadrien Grasland, released under GPLv2 license (see COPYING for more details)</source>
-        <translation>(C) 2011 Hadrien Grasland, released under GPLv2 license (see COPYING for more details)</translation>
+        <source>(C) 2011-2012 Hadrien Grasland, released under GPLv2 license (see COPYING for more details)</source>
+        <oldsource>(C) 2011 Hadrien Grasland, released under GPLv2 license (see COPYING for more details)</oldsource>
+        <translation>(C) 2011-2012 Hadrien Grasland, released under GPLv2 license (see COPYING for more details)</translation>
     </message>
 </context>
 <context>
     <name>CoreApplication</name>
     <message>
-        <location filename="main.cpp" line="40"/>
-        <location filename="main.cpp" line="48"/>
+        <location filename="main.cpp" line="38"/>
+        <location filename="main.cpp" line="46"/>
         <source>Hashish</source>
         <translation>Hashish</translation>
     </message>
     <message>
-        <location filename="error_management.cpp" line="45"/>
+        <location filename="error_management.cpp" line="50"/>
         <source>%1
 If this is a persistent problem, please contact us using the information that you will find in the &quot;About&quot; tab.</source>
         <translation>%1
 If this is a persistent problem, please contact us using the information that you will find in the &quot;About&quot; tab.</translation>
     </message>
+    <message>
+        <location filename="test_suite.cpp" line="44"/>
+        <source>It seems that Hashish has a problem with your computer, because it does its mathematics wrong. We recommend that you contact us about this problem, using the information which you will find in the About tab.</source>
+        <translation>It seems that Hashish has a problem with your computer, because it does its mathematics wrong. We recommend that you contact us about this problem, using the information which you will find in the About tab.</translation>
+    </message>
 </context>
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="main_window.cpp" line="43"/>
+        <location filename="main_window.cpp" line="45"/>
         <source>&amp;Passwords</source>
         <translation>&amp;Passwords</translation>
     </message>
     <message>
-        <location filename="main_window.cpp" line="44"/>
+        <location filename="main_window.cpp" line="46"/>
         <source>&amp;Services</source>
         <translation>&amp;Services</translation>
     </message>
     <message>
-        <location filename="main_window.cpp" line="45"/>
+        <location filename="main_window.cpp" line="47"/>
         <source>Se&amp;ttings</source>
         <translation>Se&amp;ttings</translation>
     </message>
     <message>
-        <location filename="main_window.cpp" line="46"/>
+        <location filename="main_window.cpp" line="48"/>
         <source>A&amp;bout</source>
         <translation>A&amp;bout</translation>
+    </message>
+    <message>
+        <location filename="main_window.cpp" line="71"/>
+        <source>Self-check failed</source>
+        <translation>Self-check failed</translation>
     </message>
 </context>
 <context>

@@ -68,9 +68,10 @@ OTHER_FILES += \
     hashish.xcf \
     hashish.ico \
     hashish.desktop \
+    hashish.png \
     COPYING \
     Tests/SHA-512.testvecs \
-    Tests/RFC\ 2104.testvecs \
-    Tests/OFB-chained\ XOR cipher.testvecs \
-    Tests/Default\ generator.testvecs \
+    "Tests/RFC 2104.testvecs" \
+    "Tests/OFB-chained XOR cipher.testvecs" \
+    "Tests/Default generator.testvecs" \
     README
