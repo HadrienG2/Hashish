@@ -1,1 +1,5 @@
-Normally, qmake/make/make install should do when compiling+installing this project, except for the desktop file which still must be manually installed currently. However, I haven't tried it yet. If you use Qt Creator to build the project, everything should work fine.
+I mostly work on this project using Qt Creator, and if you use it to build binaries, everything should work fine. The qmake/make/make install trio is currently being worked on, so I don't advice using it to install stuff, but if you really want to this project relies on the presence of the following development packages :
+-libc
+-qmake
+-QtCore
+-QtGui (also called qt-x11 in some repositories)
