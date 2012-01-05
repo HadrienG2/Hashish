@@ -30,14 +30,14 @@ AboutWindow::AboutWindow(int max_icon_size) {
     app_icon->setMaximumHeight(max_icon_size);
 
     //Display the full about text
-    const int hashish_version = 1;
-    const QString website_url = "mailto:guydeloinbard@yahoo.fr";
+    const int hashish_version = 2;
+    const QString website_url = "http://neolander.github.com/Hashish/";
     QString about_text_contents(tr("<center><h2>Hashish v%1</h2></center>").arg(hashish_version));
     about_text_contents+=tr("This simple and secure password generator and manager ");
     about_text_contents+=tr("is brought to you by Hadrien Grasland \"Neolander\" (main developer) ");
     about_text_contents+=tr("and Louis Gosselin (cryptography expert)<br />");
     about_text_contents+=QString("<center><a href=\"%1\">%1</a></center><br />").arg(website_url);
-    about_text_contents+=tr("(C) 2011 Hadrien Grasland, released under GPLv2 license (see COPYING for more details)");
+    about_text_contents+=tr("(C) 2011-2012 Hadrien Grasland, released under GPLv2 license (see COPYING for more details)");
 
     about_text_scroll_area = new QScrollArea;
     about_text_scroll_area->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
