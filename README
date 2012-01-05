@@ -4,4 +4,4 @@ I mostly work on this project using Qt Creator, and if you use it to build binar
 -QtCore
 -QtGui (also called qt-x11 in some repositories)
 
-If you want developer-oriented documentation on Hashish, please refer to the [Hashish wiki] (https://github.com/Neolander/Hashish/wiki)
+If you want developer-oriented documentation on Hashish, please refer to the Hashish wiki (https://github.com/Neolander/Hashish/wiki)
