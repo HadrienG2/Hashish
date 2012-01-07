@@ -48,8 +48,6 @@ class MainWindow : public QWidget {
     PasswordWindow* password_window;
     ServiceWindow* service_window;
     SettingsWindow* settings_window;
-    int tab_height;
-    int tab_width;
     QTabWidget* tab_widget;
     QVBoxLayout* vbox_layout;
 };
