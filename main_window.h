@@ -41,11 +41,13 @@ class MainWindow : public QWidget {
   public slots:
     void create_service(const QString& service_name);
     void editing_done(const QString& new_service_name);
+    void new_instance_spawned();
     void reset_main_window_size();
 
   private:
     AboutWindow* about_window;
     PasswordWindow* password_window;
+    ServiceManager* service_man;
     ServiceWindow* service_window;
     SettingsWindow* settings_window;
     QTabWidget* tab_widget;

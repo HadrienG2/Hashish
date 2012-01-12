@@ -30,7 +30,7 @@ AboutWindow::AboutWindow(int max_icon_size) {
     app_icon->setMaximumHeight(max_icon_size);
 
     //Display the full about text
-    const int hashish_version = 2;
+    const int hashish_version = 3;
     const QString website_url = "http://neolander.github.com/Hashish/";
     QString about_text_contents(tr("<center><h2>Hashish v%1</h2></center>").arg(hashish_version));
     about_text_contents+=tr("This simple and secure password generator and manager ");

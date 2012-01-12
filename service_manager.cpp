@@ -18,6 +18,8 @@
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA */
 
 #include <QDesktopServices>
+#include <QLocalSocket>
+#include <QTimer>
 
 #include <crypto_hash.h>
 #include <error_management.h>
@@ -34,6 +36,8 @@ const size_t DEFAULT_LATENCY = 50; //Default acceptable password generation late
 
 const QString ERROR_LOG_FILENAME("error_log.txt");
 
+const QString HASHISH_SOCKET_NAME("hashish_command_stream");
+
 const QString ID_FILENAME("file_name : ");
 const QString ID_ITERATIONS("default_iterations : ");
 const QString ID_LATENCY("acceptable_latency : ");
@@ -47,7 +51,10 @@ const QString SERVICE_DIRECTORY_FILENAME("services");
 const QString SETTINGS_FILENAME("settings.txt");
 const QString SETTINGS_HEADER("*** Hashish settings v1 ***");
 
-ServiceManager::ServiceManager() : service_name_list_model(NULL) {
+ServiceManager::ServiceManager() : ipc_server(NULL),
+                                   service_name_list_model(NULL),
+                                   to_delete(NULL) {
+    start_ipc();
     open_application_data_directory();
     open_error_output();
     read_settings();
@@ -79,6 +86,11 @@ void ServiceManager::add_service(const QString& service_name) {
     cache_entry.last_used = clock();
 
     emit service_ready(cache_entry.descriptor);
+}
+
+void ServiceManager::delete_qobject(QObject* object) {
+    to_delete = object;
+    QTimer::singleShot(10, this, SLOT(perform_delete()));
 }
 
 void ServiceManager::generate_password(const QString& service_name, const QString& master_password) {
@@ -149,6 +161,11 @@ void ServiceManager::save_service(const QString& former_name, const QString& new
     }
 
     emit service_saved();
+}
+
+void ServiceManager::perform_delete() {
+    delete to_delete;
+    to_delete = NULL;
 }
 
 void ServiceManager::case_insensitive_sort(QStringList& list) {
@@ -568,6 +585,33 @@ void ServiceManager::sift_down(QStringList& list, const int start, const int end
             //If not, the heap is sorted below the current root node
             return;
         }
+    }
+}
+
+bool ServiceManager::start_ipc() {
+    //Attempt to connect to an already running "server" instance of Hashish.
+    QLocalSocket client_socket(this);
+    client_socket.connectToServer(HASHISH_SOCKET_NAME);
+    bool success = client_socket.waitForConnected(5);
+
+    if(success) {
+        running_instance_found = true;
+
+        //If a running instance is found, the connection will act as a new instance notification.
+        //We do not need to keep it running for current versions of Hashish's IPC protocol.
+        client_socket.abort();
+        return success;
+    } else {
+        running_instance_found = false;
+
+        //If the connection error is not due to a missing server, abort.
+        if(client_socket.error() != QLocalSocket::ServerNotFoundError) return false;
+
+        //Otherwise, become the server instance of Hashish
+        ipc_server = new QLocalServer(this);
+        ipc_server->listen(HASHISH_SOCKET_NAME);
+        connect(ipc_server, SIGNAL(newConnection()), this, SIGNAL(new_instance_spawned()));
+        return true;
     }
 }
 

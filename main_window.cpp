@@ -16,13 +16,21 @@
     along with this program; if not, write to the Free Software
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA */
 
+#include <QApplication>
 #include <QMessageBox>
 #include <main_window.h>
 #include <test_suite.h>
 
+#include <QTimer>
+
 MainWindow::MainWindow(ServiceManager& service_manager,
                        const int max_height,
                        const int max_width) {
+    service_man = &service_manager;
+
+    //Set window title
+    setWindowTitle(qApp->translate("CoreApplication", "Hashish"));
+
     //Ensure that this window does not become too large
     setMaximumHeight(max_height);
     setMaximumWidth(max_width);
@@ -71,6 +79,12 @@ MainWindow::MainWindow(ServiceManager& service_manager,
                              tr("Self-check failed"),
                              WARNING_TESTS_FAILED);
     }
+
+    //Recreate the main window each time a new instance of Hashish should be spawned
+    connect(service_man,
+            SIGNAL(new_instance_spawned()),
+            this,
+            SLOT(new_instance_spawned()));
 }
 
 void MainWindow::create_service(const QString& service_id) {
@@ -92,6 +106,16 @@ void MainWindow::editing_done(const QString &new_service_name) {
     password_window->editing_done(new_service_name);
     tab_widget->setCurrentIndex(0);
     password_window->setFocus();
+}
+
+void MainWindow::new_instance_spawned() {
+    //Recreates the main window of Hashish so that it goes to the current desktop
+    setEnabled(false);
+    MainWindow* new_win = new MainWindow(*service_man, maximumHeight(), maximumWidth());
+    new_win->setWindowTitle(windowTitle());
+    new_win->show();
+    hide();
+    service_man->delete_qobject(this);
 }
 
 void MainWindow::reset_main_window_size() {

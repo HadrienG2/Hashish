@@ -1,5 +1,7 @@
 QMAKE_CXXFLAGS += -std=c++0x -U__STRICT_ANSI__ -Wall
 
+QT += network
+
 RESOURCES = hashish.qrc
 
 SOURCES += main.cpp \

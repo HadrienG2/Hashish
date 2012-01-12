@@ -41,10 +41,12 @@ int main(int argc, char *argv[])
     //Initialize ServiceManager backend
     ServiceManager service_manager;
 
+    //Do not tolerate multiple running instances of Hashish
+    if(service_manager.already_running()) return 0;
+
     //Create and display main window
-    MainWindow main_window(service_manager);
-    main_window.setWindowTitle(app.translate("CoreApplication", "Hashish"));
-    main_window.show();
+    MainWindow* main_window = new MainWindow(service_manager);
+    main_window->show();
 
     return app.exec();
 }

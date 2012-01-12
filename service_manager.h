@@ -23,6 +23,7 @@
 #include <QDir>
 #include <QFile>
 #include <QHash>
+#include <QLocalServer>
 #include <QObject>
 #include <QString>
 #include <QStringList>
@@ -48,19 +49,22 @@ class ServiceManager : public QObject {
   public:
     ServiceManager();
     ~ServiceManager();
+    bool already_running() {return running_instance_found;}
     QStringListModel* available_services() {return service_name_list_model;}
+    bool crypto_function_tests_passed() {return tests_passed;}
     uint64_t current_latency() {return acceptable_latency;}
     bool set_current_latency(uint64_t new_latency);
-    bool crypto_function_tests_passed() {return tests_passed;}
 
   public slots:
     void add_service(const QString& service_name);
+    void delete_qobject(QObject* object); //Deletes a QObject after a small delay
     void generate_password(const QString& service_name, const QString& master_password);
     void load_service(const QString& service_name);
     void remove_service(const QString& service_name);
     void save_service(const QString& previous_name, const QString& new_name, ServiceDescriptor& service);
 
   signals:
+    void new_instance_spawned(); //Triggered each time a new instance of Hashish is spawned
     void password_generation_failed();
     void password_ready(const QString& password);
     void service_loading_failed();
@@ -69,6 +73,9 @@ class ServiceManager : public QObject {
     void service_removed();
     void service_saved();
 
+  private slots:
+    void perform_delete();
+
   private:
     uint64_t acceptable_latency;
     QDir* app_data_dir;
@@ -76,7 +83,9 @@ class ServiceManager : public QObject {
     uint64_t default_iterations;
     QFile* error_log_file;
     QTextStream* error_log_stream;
+    QLocalServer* ipc_server;
     QString password_buffer;
+    bool running_instance_found;
     QFile* service_db_file;
     QDir* service_dir;
     QStringList service_name_list;
@@ -84,6 +93,7 @@ class ServiceManager : public QObject {
     QHash<QString, QString> service_filenames;
     QFile* settings_file;
     bool tests_passed;
+    QObject* to_delete;
 
     void case_insensitive_sort(QStringList& list);
     void close_error_output();
@@ -101,6 +111,7 @@ class ServiceManager : public QObject {
     QFile* read_service_database();
     QFile* read_settings();
     void sift_down(QStringList& list, const int start, const int end);
+    bool start_ipc();
     void test_cryptographic_functions();
     bool update_service_name(const QString& former_name, const QString& new_name);
 };

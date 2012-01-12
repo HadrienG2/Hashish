@@ -8,5 +8,6 @@ development packages :
 -qmake
 -QtCore
 -QtGui (also called qt-x11 in some repositories)
+-QtNetwork
 
 If you want developer-oriented documentation on Hashish, please refer to the Hashish wiki (https://github.com/Neolander/Hashish/wiki)
