@@ -74,6 +74,7 @@ class ServiceManager : public QObject {
     void service_saved();
 
   private slots:
+    void ipc_new_connection();
     void perform_delete();
 
   private:
@@ -112,6 +113,7 @@ class ServiceManager : public QObject {
     QFile* read_settings();
     void sift_down(QStringList& list, const int start, const int end);
     bool start_ipc();
+    void stop_ipc();
     void test_cryptographic_functions();
     bool update_service_name(const QString& former_name, const QString& new_name);
 };

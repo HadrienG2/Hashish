@@ -110,11 +110,10 @@ void MainWindow::editing_done(const QString &new_service_name) {
 
 void MainWindow::new_instance_spawned() {
     //Recreates the main window of Hashish so that it goes to the current desktop
-    setEnabled(false);
+    hide();
     MainWindow* new_win = new MainWindow(*service_man, maximumHeight(), maximumWidth());
     new_win->setWindowTitle(windowTitle());
     new_win->show();
-    hide();
     service_man->delete_qobject(this);
 }
 

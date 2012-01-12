@@ -64,6 +64,7 @@ ServiceManager::ServiceManager() : ipc_server(NULL),
 }
 
 ServiceManager::~ServiceManager() {
+    stop_ipc();
     close_error_output();
     password_buffer.clear();
 }
@@ -161,6 +162,19 @@ void ServiceManager::save_service(const QString& former_name, const QString& new
     }
 
     emit service_saved();
+}
+
+void ServiceManager::ipc_new_connection() {
+    //Abort and delete all pending connections
+    QLocalSocket* pending_connection = ipc_server->nextPendingConnection();
+    while(pending_connection) {
+        pending_connection->abort();
+        delete pending_connection;
+        pending_connection = ipc_server->nextPendingConnection();
+    }
+
+    //Notify UI layers that a new Hashish instance has been spawned
+    emit new_instance_spawned();
 }
 
 void ServiceManager::perform_delete() {
@@ -604,15 +618,20 @@ bool ServiceManager::start_ipc() {
     } else {
         running_instance_found = false;
 
-        //If the connection error is not due to a missing server, abort.
-        if(client_socket.error() != QLocalSocket::ServerNotFoundError) return false;
-
-        //Otherwise, become the server instance of Hashish
+        //Become the server instance of Hashish, killing any hung instance in the way
         ipc_server = new QLocalServer(this);
-        ipc_server->listen(HASHISH_SOCKET_NAME);
-        connect(ipc_server, SIGNAL(newConnection()), this, SIGNAL(new_instance_spawned()));
+        if(client_socket.error() != QLocalSocket::ServerNotFoundError) {
+            ipc_server->removeServer(HASHISH_SOCKET_NAME);
+        }
+        success = ipc_server->listen(HASHISH_SOCKET_NAME);
+        ipc_server->setMaxPendingConnections(2);
+        connect(ipc_server, SIGNAL(newConnection()), this, SLOT(ipc_new_connection()));
         return true;
     }
+}
+
+void ServiceManager::stop_ipc() {
+    if(ipc_server) ipc_server->close();
 }
 
 void ServiceManager::test_cryptographic_functions() {
