@@ -18,10 +18,10 @@
 
 #include <QApplication>
 #include <QMessageBox>
+
+#include <delayed_deletion.h>
 #include <main_window.h>
 #include <test_suite.h>
-
-#include <QTimer>
 
 MainWindow::MainWindow(ServiceManager& service_manager,
                        const int max_height,
@@ -109,12 +109,16 @@ void MainWindow::editing_done(const QString &new_service_name) {
 }
 
 void MainWindow::new_instance_spawned() {
-    //Recreates the main window of Hashish so that it goes to the current desktop
+    static DelayedDeletion <MainWindow> main_win_cleanup;
+    if(main_win_cleanup.isRunning() == true) return;
+
+    //Recreates the main window of Hashish so that it goes to the current desktop    
     hide();
     MainWindow* new_win = new MainWindow(*service_man, maximumHeight(), maximumWidth());
     new_win->setWindowTitle(windowTitle());
     new_win->show();
-    service_man->delete_qobject(this);
+    main_win_cleanup.target = this;
+    main_win_cleanup.start();
 }
 
 void MainWindow::reset_main_window_size() {

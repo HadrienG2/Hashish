@@ -57,7 +57,6 @@ class ServiceManager : public QObject {
 
   public slots:
     void add_service(const QString& service_name);
-    void delete_qobject(QObject* object); //Deletes a QObject after a small delay
     void generate_password(const QString& service_name, const QString& master_password);
     void load_service(const QString& service_name);
     void remove_service(const QString& service_name);
@@ -75,7 +74,6 @@ class ServiceManager : public QObject {
 
   private slots:
     void ipc_new_connection();
-    void perform_delete();
 
   private:
     uint64_t acceptable_latency;

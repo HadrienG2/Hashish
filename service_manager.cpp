@@ -89,11 +89,6 @@ void ServiceManager::add_service(const QString& service_name) {
     emit service_ready(cache_entry.descriptor);
 }
 
-void ServiceManager::delete_qobject(QObject* object) {
-    to_delete = object;
-    QTimer::singleShot(10, this, SLOT(perform_delete()));
-}
-
 void ServiceManager::generate_password(const QString& service_name, const QString& master_password) {
     //Fetch service descriptor associated to the requested service id
     ServiceDescriptor* service_desc = fetch_service(service_name);
@@ -175,11 +170,6 @@ void ServiceManager::ipc_new_connection() {
 
     //Notify UI layers that a new Hashish instance has been spawned
     emit new_instance_spawned();
-}
-
-void ServiceManager::perform_delete() {
-    delete to_delete;
-    to_delete = NULL;
 }
 
 void ServiceManager::case_insensitive_sort(QStringList& list) {

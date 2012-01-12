@@ -37,7 +37,8 @@ HEADERS += return_filter.h \
     settings_window.h \
     about_window.h \
     error_management.h \
-    test_suite.h
+    test_suite.h \
+    delayed_deletion.h
 
 TRANSLATIONS = hashish_fr.ts \
                hashish_en.ts
