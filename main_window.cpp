@@ -19,7 +19,6 @@
 #include <QApplication>
 #include <QMessageBox>
 
-#include <delayed_deletion.h>
 #include <main_window.h>
 #include <test_suite.h>
 
@@ -109,16 +108,13 @@ void MainWindow::editing_done(const QString &new_service_name) {
 }
 
 void MainWindow::new_instance_spawned() {
-    static DelayedDeletion <MainWindow> main_win_cleanup;
-    if(main_win_cleanup.isRunning() == true) return;
-
-    //Recreates the main window of Hashish so that it goes to the current desktop    
+    //Recreates the main window of Hashish so that it goes to the current desktop
     hide();
     MainWindow* new_win = new MainWindow(*service_man, maximumHeight(), maximumWidth());
     new_win->setWindowTitle(windowTitle());
     new_win->show();
-    main_win_cleanup.target = this;
-    main_win_cleanup.start();
+    setAttribute(Qt::WA_DeleteOnClose, true);
+    close();
 }
 
 void MainWindow::reset_main_window_size() {

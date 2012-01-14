@@ -29,6 +29,7 @@
 #include <password_generator.h>
 #include <service_descriptor.h>
 #include <service_manager.h>
+#include <stdlib.h>
 
 const QString SERVICE_MANAGER_NAME("ServiceManager");
 
@@ -36,7 +37,7 @@ const size_t DEFAULT_LATENCY = 50; //Default acceptable password generation late
 
 const QString ERROR_LOG_FILENAME("error_log.txt");
 
-const QString HASHISH_SOCKET_NAME("hashish_command_stream");
+const QString HASHISH_SOCKET_NAME("hashish_command_stream_%1"); //First argument is the user name
 
 const QString ID_FILENAME("file_name : ");
 const QString ID_ITERATIONS("default_iterations : ");
@@ -55,6 +56,7 @@ ServiceManager::ServiceManager() : ipc_server(NULL),
                                    service_name_list_model(NULL),
                                    to_delete(NULL) {
     start_ipc();
+    if(running_instance_found) return;
     open_application_data_directory();
     open_error_output();
     read_settings();
@@ -142,7 +144,7 @@ void ServiceManager::save_service(const QString& former_name, const QString& new
     }
 
     //Save the service to its dedicated file
-    QString filepath = service_dir->filePath(service_filenames[new_name]);
+    QString filepath = service_dir->cleanPath(service_filenames[new_name]);
     tmp_result = service.save_to_file(filepath);
     if(!tmp_result) {
         emit service_saving_failed();
@@ -219,7 +221,7 @@ ServiceDescriptor* ServiceManager::fetch_service(const QString& service_name) {
     ServiceDescriptor& oldest_descriptor = oldest_cache_entry.descriptor;
 
     //Fetch our descriptor's full file path and load it in the oldest cache entry.
-    QString filepath = service_dir->filePath(service_filenames[service_name]);
+    QString filepath = service_dir->cleanPath(service_filenames[service_name]);
     success = oldest_descriptor.load_from_file(filepath);
     if(!success) return NULL;
 
@@ -294,7 +296,7 @@ bool ServiceManager::generate_service_database(bool from_scratch) {
         ServiceDescriptor tmp_desc;
         for(int i = 0; i < service_dir_contents.count(); ++i) {
             if(service_dir_contents[i].at(0) == '.') continue;
-            current_filename = service_dir->filePath(service_dir_contents[i]);
+            current_filename = service_dir->cleanPath(service_dir_contents[i]);
             success = tmp_desc.load_from_file(current_filename);
             if(success) {
                 service_db_ostream << ID_SERVICE << tmp_desc.service_name << endl;
@@ -356,7 +358,7 @@ QDir* ServiceManager::open_application_data_directory() {
 
 bool ServiceManager::open_error_output() {
     //Access error log file
-    error_log_file = new QFile(app_data_dir->filePath(ERROR_LOG_FILENAME));
+    error_log_file = new QFile(app_data_dir->cleanPath(ERROR_LOG_FILENAME));
     if(!error_log_file) return false;
 
     //Open the file in write-append mode and start error logging
@@ -371,7 +373,7 @@ bool ServiceManager::open_error_output() {
 
 QDir* ServiceManager::open_service_directory() {
     //Get standard application data directory from QDesktopServices
-    service_dir = new QDir(app_data_dir->filePath(SERVICE_DIRECTORY_FILENAME));
+    service_dir = new QDir(app_data_dir->cleanPath(SERVICE_DIRECTORY_FILENAME));
     if(!service_dir) {
         log_error(SERVICE_MANAGER_NAME, ERR_BAD_ALLOC.arg(QString("service_dir")));
         return NULL;
@@ -461,7 +463,7 @@ bool ServiceManager::parse_settings(QTextStream& settings_istream) {
 QFile* ServiceManager::read_service_database() {
     bool success;
     //Access standard service database
-    service_db_file = new QFile(app_data_dir->filePath(SERVICE_DATABASE_FILENAME));
+    service_db_file = new QFile(app_data_dir->cleanPath(SERVICE_DATABASE_FILENAME));
     if(!service_db_file) {
         log_error(SERVICE_MANAGER_NAME, ERR_BAD_ALLOC.arg(QString("service_db_file")));
         return NULL;
@@ -507,7 +509,7 @@ QFile* ServiceManager::read_service_database() {
 QFile* ServiceManager::read_settings() {
     bool success;
     //Access settings file
-    settings_file = new QFile(app_data_dir->filePath(SETTINGS_FILENAME));
+    settings_file = new QFile(app_data_dir->cleanPath(SETTINGS_FILENAME));
     if(!settings_file) {
         log_error(SERVICE_MANAGER_NAME, ERR_BAD_ALLOC.arg(QString("settings_file")));
         return NULL;
@@ -593,9 +595,19 @@ void ServiceManager::sift_down(QStringList& list, const int start, const int end
 }
 
 bool ServiceManager::start_ipc() {
+    //Compute Hashish's full socket name (including username on supported platforms)
+    char* user_name = (char*) "";
+    #ifdef Q_OS_UNIX
+        user_name = getenv("USER");
+    #endif
+    #ifdef Q_OS_WIN32
+        user_name = getenv("USERNAME");
+    #endif
+    QString full_socket_name = HASHISH_SOCKET_NAME.arg(QString(user_name));
+
     //Attempt to connect to an already running "server" instance of Hashish.
     QLocalSocket client_socket(this);
-    client_socket.connectToServer(HASHISH_SOCKET_NAME);
+    client_socket.connectToServer(full_socket_name);
     bool success = client_socket.waitForConnected(5);
 
     if(success) {
@@ -608,12 +620,12 @@ bool ServiceManager::start_ipc() {
     } else {
         running_instance_found = false;
 
-        //Become the server instance of Hashish, killing any hung instance in the way
+        //Become the server instance of Hashish, disabling any hung instance in the way
         ipc_server = new QLocalServer(this);
         if(client_socket.error() != QLocalSocket::ServerNotFoundError) {
-            ipc_server->removeServer(HASHISH_SOCKET_NAME);
+            ipc_server->removeServer(full_socket_name);
         }
-        success = ipc_server->listen(HASHISH_SOCKET_NAME);
+        success = ipc_server->listen(full_socket_name);
         ipc_server->setMaxPendingConnections(2);
         connect(ipc_server, SIGNAL(newConnection()), this, SLOT(ipc_new_connection()));
         return true;

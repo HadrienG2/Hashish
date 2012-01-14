@@ -38,10 +38,8 @@ int main(int argc, char *argv[])
     app.setApplicationName(app.translate("CoreApplication", "Hashish"));
     app.setWindowIcon(QIcon(":/hashish.png"));
 
-    //Initialize ServiceManager backend
+    //Initialize ServiceManager backend, do not tolerate multiple running instances
     ServiceManager service_manager;
-
-    //Do not tolerate multiple running instances of Hashish
     if(service_manager.already_running()) return 0;
 
     //Create and display main window
