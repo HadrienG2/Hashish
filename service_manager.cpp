@@ -144,7 +144,7 @@ void ServiceManager::save_service(const QString& former_name, const QString& new
     }
 
     //Save the service to its dedicated file
-    QString filepath = service_dir->cleanPath(service_filenames[new_name]);
+    QString filepath = service_dir->filePath(service_filenames[new_name]);
     tmp_result = service.save_to_file(filepath);
     if(!tmp_result) {
         emit service_saving_failed();
@@ -221,7 +221,7 @@ ServiceDescriptor* ServiceManager::fetch_service(const QString& service_name) {
     ServiceDescriptor& oldest_descriptor = oldest_cache_entry.descriptor;
 
     //Fetch our descriptor's full file path and load it in the oldest cache entry.
-    QString filepath = service_dir->cleanPath(service_filenames[service_name]);
+    QString filepath = service_dir->filePath(service_filenames[service_name]);
     success = oldest_descriptor.load_from_file(filepath);
     if(!success) return NULL;
 
@@ -296,7 +296,7 @@ bool ServiceManager::generate_service_database(bool from_scratch) {
         ServiceDescriptor tmp_desc;
         for(int i = 0; i < service_dir_contents.count(); ++i) {
             if(service_dir_contents[i].at(0) == '.') continue;
-            current_filename = service_dir->cleanPath(service_dir_contents[i]);
+            current_filename = service_dir->filePath(service_dir_contents[i]);
             success = tmp_desc.load_from_file(current_filename);
             if(success) {
                 service_db_ostream << ID_SERVICE << tmp_desc.service_name << endl;
@@ -358,7 +358,7 @@ QDir* ServiceManager::open_application_data_directory() {
 
 bool ServiceManager::open_error_output() {
     //Access error log file
-    error_log_file = new QFile(app_data_dir->cleanPath(ERROR_LOG_FILENAME));
+    error_log_file = new QFile(app_data_dir->filePath(ERROR_LOG_FILENAME));
     if(!error_log_file) return false;
 
     //Open the file in write-append mode and start error logging
@@ -373,7 +373,7 @@ bool ServiceManager::open_error_output() {
 
 QDir* ServiceManager::open_service_directory() {
     //Get standard application data directory from QDesktopServices
-    service_dir = new QDir(app_data_dir->cleanPath(SERVICE_DIRECTORY_FILENAME));
+    service_dir = new QDir(app_data_dir->filePath(SERVICE_DIRECTORY_FILENAME));
     if(!service_dir) {
         log_error(SERVICE_MANAGER_NAME, ERR_BAD_ALLOC.arg(QString("service_dir")));
         return NULL;
@@ -463,7 +463,7 @@ bool ServiceManager::parse_settings(QTextStream& settings_istream) {
 QFile* ServiceManager::read_service_database() {
     bool success;
     //Access standard service database
-    service_db_file = new QFile(app_data_dir->cleanPath(SERVICE_DATABASE_FILENAME));
+    service_db_file = new QFile(app_data_dir->filePath(SERVICE_DATABASE_FILENAME));
     if(!service_db_file) {
         log_error(SERVICE_MANAGER_NAME, ERR_BAD_ALLOC.arg(QString("service_db_file")));
         return NULL;
@@ -509,7 +509,7 @@ QFile* ServiceManager::read_service_database() {
 QFile* ServiceManager::read_settings() {
     bool success;
     //Access settings file
-    settings_file = new QFile(app_data_dir->cleanPath(SETTINGS_FILENAME));
+    settings_file = new QFile(app_data_dir->filePath(SETTINGS_FILENAME));
     if(!settings_file) {
         log_error(SERVICE_MANAGER_NAME, ERR_BAD_ALLOC.arg(QString("settings_file")));
         return NULL;
